@@ -1,0 +1,14 @@
+{
+  "development": {
+    "dialect": "sqlite",
+    "storage": "./db.gambling_games_db_development.sqlite"
+  },
+  "test": {
+    "dialect": "sqlite",
+    "storage": "./db.gambling_games_db_test.sqlite"
+  },
+  "production": {
+    "dialect": "sqlite",
+    "storage": "./db.gambling_games_db.sqlite"
+  }
+}
