@@ -1,0 +1,2 @@
+GET {{ API_URL }}:{{ API_PORT }}/api/currency
+Content-Type: application/json

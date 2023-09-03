@@ -4,14 +4,17 @@ Content-Type: application/json
 {
   "gameId": 1,
   "gameName": "Test game (updated)",
+  "gameCostBaseValue": 20,
   "gameValues": [
     {
       "value": "New value 1",
-      "chance": 60
+      "chance": 60,
+      "currencyId": 1
     },
     {
       "value": "New value 2",
-      "chance": 40
+      "chance": 40,
+      "currencyId": 1
     }
   ]
 }

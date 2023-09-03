@@ -23,16 +23,19 @@ module.exports = {
           key: 'id',
         },
       },
+      currencyId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Currency',
+          key: 'id'
+        },
+        defaultValue: 1
+      }
     }, {
       freezeTableName: true,
       timestamps: false
     });
 
-    await queryInterface.bulkInsert('GameValue', [
-      { value: 'Chance 20', chance: '20', gameId: 1 },
-      { value: 'Chance 30', chance: '30', gameId: 1 },
-      { value: 'Chance 50', chance: '50', gameId: 1 },
-    ], {});
   },
 
   async down (queryInterface, Sequelize) {

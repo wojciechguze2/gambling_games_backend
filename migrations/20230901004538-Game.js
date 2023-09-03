@@ -14,6 +14,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      costBaseValue: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -28,10 +32,6 @@ module.exports = {
       freezeTableName: true,
       timestamps: true
     });
-
-    await queryInterface.bulkInsert('Game', [
-      { name: 'Game 1' },
-    ], {});
   },
 
   async down (queryInterface, Sequelize) {

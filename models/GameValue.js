@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
                 model: 'Game',
                 key: 'id'
             }
+        },
+        currencyId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'Currency',
+                key: 'id'
+            },
+            defaultValue: 1
         }
     }, {
         freezeTableName: true,
@@ -29,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
 
     GameValue.associate = (models) => {
         GameValue.belongsTo(models.Game, { foreignKey: 'gameId' });
+        GameValue.belongsTo(models.Currency, { foreignKey: 'currencyId' });
     }
 
     return GameValue

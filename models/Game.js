@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        costBaseValue: {  // costBaseValue * currency multiplier = price
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false
+        },
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,

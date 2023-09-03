@@ -4,7 +4,7 @@ const getGames = async (req, res) => {
     const games = await db.Game.findAll({
         include: [
             {
-                model: db.GameValue
+                model: db.GameValue,
             }
         ],
     });
@@ -15,11 +15,13 @@ const getGames = async (req, res) => {
 const createGame = async (req, res) => {
     const {
         gameName,
+        gameCostBaseValue,
         gameValues
     } = req.body;
 
     const game = await db.Game.create({
         name: gameName,
+        costBaseValue: gameCostBaseValue,
     });
 
     await Promise.all(
@@ -28,6 +30,7 @@ const createGame = async (req, res) => {
                 value: value.value,
                 chance: value.chance,
                 gameId: game.id,
+                currencyId: value.currencyId
             });
         })
     );
@@ -39,6 +42,7 @@ const updateGame = async (req, res) => {
     const {
         gameId,
         gameName,
+        gameCostBaseValue,
         gameValues
     } = req.body;
 
@@ -48,8 +52,15 @@ const updateGame = async (req, res) => {
         return res.status(404).json({ error: 'Game does not exist.' });
     }
 
-    if (gameName) {
-        game.name = gameName;
+    if (gameName || gameCostBaseValue) {
+        if (gameName) {
+            game.name = gameName;
+        }
+
+        if (gameCostBaseValue) {
+            game.costBaseValue = gameCostBaseValue;
+        }
+
         await game.save();
     }
 
@@ -61,6 +72,7 @@ const updateGame = async (req, res) => {
                 value: value.value,
                 chance: value.chance,
                 gameId: gameId,
+                currencyId: value.currencyId
             });
         })
     );
@@ -106,10 +118,31 @@ const getRandomGame = async (req, res) => {
     res.status(200).json(randomGame);
 }
 
+const getGame = async (req, res) => {
+    const { gameId } = req.params
+
+    const game = await db.Game.findByPk(gameId, {
+        include: [
+            {
+                model: db.GameValue,
+            }
+        ],
+    });
+
+    res.status(200).json(game);
+}
+
+const getGameResult = async (req, res) => {
+    const { gameId } = req.params
+
+}
+
 module.exports = {
     getGames,
     createGame,
     updateGame,
     deleteGame,
-    getRandomGame
+    getRandomGame,
+    getGame,
+    getGameResult
 };

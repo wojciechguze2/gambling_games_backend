@@ -12,7 +12,9 @@ const app = express();
 
 app.use(bodyParser.json());
 
+// routes
 app.use('/api', require('./routes/gameRoutes'));
+app.use('/api', require('./routes/currencyRoutes'));
 app.use(errorHandler);
 
 db.sequelize.sync().then(() => {
