@@ -1,0 +1,17 @@
+PATCH {{API_URL}}:{{API_PORT}}/api/games
+Content-Type: application/json
+
+{
+  "gameId": 1,
+  "gameName": "Test game (updated)",
+  "gameValues": [
+    {
+      "value": "New value 1",
+      "chance": 60
+    },
+    {
+      "value": "New value 2",
+      "chance": 40
+    }
+  ]
+}

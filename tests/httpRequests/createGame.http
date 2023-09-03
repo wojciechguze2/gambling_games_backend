@@ -2,7 +2,7 @@ POST {{ API_URL }}:{{ API_PORT }}/api/games
 Content-Type: application/json
 
 {
-  "gameName": "new game",
+  "gameName": "Test game",
   "gameValues": [
     {
       "value": "Value 1",
