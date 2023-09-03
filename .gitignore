@@ -1,2 +1,4 @@
 # Project exclude paths
 /node_modules/
+/db.gambling_games_db_development.sqlite
+/.idea
