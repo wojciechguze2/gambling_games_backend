@@ -77,14 +77,39 @@ const deleteGame = async (req, res) => {
         return res.status(404).json({ error: 'Game does not exist.' });
     }
 
+    await db.GameValue.destroy({ where: { gameId } });
     await game.destroy();
 
     res.status(204).send();
 };
 
+const getRandomGame = async (req, res) => {
+    const gameCount = await db.Game.count();
+
+    if (gameCount === 0) {
+        return res.status(404).json({ error: 'Games not found.' });
+    }
+
+    // Wygeneruj losowy indeks gry
+    const randomIndex = Math.floor(Math.random() * gameCount);
+
+    // Pobierz jedną losową grę
+    const randomGame = await db.Game.findOne({
+        include: [
+            {
+                model: db.GameValue,
+            },
+        ],
+        offset: randomIndex,
+    });
+
+    res.status(200).json(randomGame);
+}
+
 module.exports = {
     getGames,
     createGame,
     updateGame,
-    deleteGame
+    deleteGame,
+    getRandomGame
 };

@@ -6,5 +6,6 @@ router.get('/games', gameController.getGames);
 router.post('/games', gameController.createGame);
 router.delete('/games', gameController.deleteGame);
 router.patch('/games', gameController.updateGame);
+router.get('/games/random', gameController.getRandomGame);
 
 module.exports = router;
