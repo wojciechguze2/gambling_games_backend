@@ -1,0 +1,28 @@
+POST {{ API_URL }}:{{ API_PORT }}/api/games
+Content-Type: application/json
+
+{
+  "gameName": "new game",
+  "gameValues": [
+    {
+      "value": "Value 1",
+      "chance": 20
+    },
+    {
+      "value": "Value 2",
+      "chance": 30
+    },
+    {
+      "value": "Value 3",
+      "chance": 30
+    },
+    {
+      "value": "Value 4",
+      "chance": 10
+    },
+    {
+      "value": "Value 5",
+      "chance": 10
+    }
+  ]
+}
