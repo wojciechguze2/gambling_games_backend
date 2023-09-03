@@ -1,4 +1,5 @@
-const db = require("../models")
+const db = require("../models");
+const { getRandomGameResult } = require("../utils/lottery");
 
 const getGames = async (req, res) => {
     const games = await db.Game.findAll({
@@ -119,7 +120,7 @@ const getRandomGame = async (req, res) => {
 }
 
 const getGame = async (req, res) => {
-    const { gameId } = req.params
+    const { gameId } = req.params;
 
     const game = await db.Game.findByPk(gameId, {
         include: [
@@ -129,12 +130,19 @@ const getGame = async (req, res) => {
         ],
     });
 
+    if (!game) {
+        return res.status(404).json({ error: 'Game does not exist.' });
+    }
+
     res.status(200).json(game);
 }
 
 const getGameResult = async (req, res) => {
-    const { gameId } = req.params
+    const { gameId } = req.params;
 
+    const randomGameResult = await getRandomGameResult(gameId);
+
+    return res.status(200).json(randomGameResult);
 }
 
 module.exports = {

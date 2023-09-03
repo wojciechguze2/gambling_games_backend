@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false
     })
 
-
     GameValue.associate = (models) => {
         GameValue.belongsTo(models.Game, { foreignKey: 'gameId' });
         GameValue.belongsTo(models.Currency, { foreignKey: 'currencyId' });

@@ -2,7 +2,7 @@ PATCH {{API_URL}}:{{API_PORT}}/api/games
 Content-Type: application/json
 
 {
-  "gameId": 1,
+  "gameId": 2,
   "gameName": "Test game (updated)",
   "gameCostBaseValue": 20,
   "gameValues": [
