@@ -4,7 +4,7 @@ const db = require("../models");
  * @param {Game} game - Game instance.
  * @returns {GameValue} - Game value as an object
  */
-const getGameResult = (game) => {
+const getRandomGameResult = (game) => {
     const gameValues = game['GameValues'];
     const totalChance = gameValues.reduce((acc, value) => acc + value.chance, 0);
     const randomValue = Math.random() * totalChance;
@@ -22,15 +22,14 @@ const getGameResult = (game) => {
 }
 
 /**
- * @param {number} userId - User identity.
+ * @param {number|null} userId - User identity.
  * @param {number} gameId - Game identity.
+ * @param {boolean} demo - Is demo (whether to save the result).
  * @returns {GameValue} - Game value as an object
  */
-const playGame = async (userId, gameId) => {
+const playGame = async (userId, gameId, demo = false) => {
     if (!gameId) {
         return res.status(404).json({ error: 'Game does not exist.' });
-    } else if (!userId) {
-        return res.status(401).json({ error: 'Authentication error.' });
     }
 
     const game = await db.Game.findByPk(gameId, {
@@ -47,16 +46,22 @@ const playGame = async (userId, gameId) => {
         ],
     });
 
-    const gameResult = getGameResult(game)
+    const gameResult = getRandomGameResult(game)
 
-    await db.GameHistory.create({
-        userId,
-        gameId,
-        costBaseValue: game.costBaseValue,
-        winValue: gameResult.value,
-        winCurrencyId: gameResult.currencyId,
-        playDate: new Date(),
-    });
+    if (!demo) {
+        if (!userId) {
+            return res.status(401).json({ error: 'Authentication error.' });
+        }
+
+        await db.GameHistory.create({
+            userId,
+            gameId,
+            costBaseValue: game.costBaseValue,
+            winValue: gameResult.value,
+            winCurrencyId: gameResult.currencyId,
+            playDate: new Date(),
+        });
+    }
 
     return gameResult
 }

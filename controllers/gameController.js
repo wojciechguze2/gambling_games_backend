@@ -143,6 +143,14 @@ const getGame = async (req, res) => {
     res.status(200).json(game);
 }
 
+const getGameDemoResult = async (req, res) => {
+    const { gameId } = req.params;
+
+    const randomGameResult = await playGame(null, gameId, true);
+
+    return res.status(200).json(randomGameResult);
+}
+
 const getGameResult = async (req, res) => {
     const { gameId } = req.params;
     const userId = req.user.user_id
@@ -159,5 +167,6 @@ module.exports = {
     deleteGame,
     getRandomGame,
     getGame,
+    getGameDemoResult,
     getGameResult
 };

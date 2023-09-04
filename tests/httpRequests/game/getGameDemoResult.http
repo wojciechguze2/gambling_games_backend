@@ -1,0 +1,2 @@
+GET {{ API_URL }}:{{ API_PORT }}/api/games/1/demo
+Content-Type: application/json
