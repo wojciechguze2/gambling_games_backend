@@ -1,5 +1,5 @@
-const db = require("../models");
-const { getRandomGameResult } = require("../utils/lottery");
+const db = require('../models');
+const { playGame } = require('../utils/lottery');
 
 const getGames = async (req, res) => {
     const games = await db.Game.findAll({
@@ -145,8 +145,9 @@ const getGame = async (req, res) => {
 
 const getGameResult = async (req, res) => {
     const { gameId } = req.params;
+    const userId = req.user.user_id
 
-    const randomGameResult = await getRandomGameResult(gameId);
+    const randomGameResult = await playGame(userId, gameId);
 
     return res.status(200).json(randomGameResult);
 }

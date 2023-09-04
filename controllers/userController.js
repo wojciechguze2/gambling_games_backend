@@ -14,13 +14,13 @@ const register = async (req, res) => {
     } = req.body;
 
     if (!username || !initiallyEncryptedPassword) {
-        res.status(400).send('Validation error');
+        res.status(400).json({ error: 'Validation error' });
     }
 
     const existingUser = await db.User.findOne({ username });
 
     if (existingUser) {
-        return res.status(409).send('User already exists');
+        return res.status(409).json({ error: 'User already exists' });
     }
 
     const encryptedPassword = await bcrypt.hash(
@@ -56,13 +56,13 @@ const login = async (req, res) => {
     } = req.body;
 
     if (!username || !initiallyEncryptedPassword) {
-        res.status(400).send('Validation error');
+        res.status(400).json({ error: 'Validation error' });
     }
 
     const user = await db.User.findOne({ username });
 
     if (!user) {
-        return res.status(401).send('Invalid credentials');
+        return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const passwordMatches = await bcrypt.compare(
@@ -71,7 +71,7 @@ const login = async (req, res) => {
     )
 
     if (!passwordMatches) {
-        return res.status(401).send('Invalid credentials');
+        return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     user.token = jwt.sign(
