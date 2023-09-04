@@ -15,6 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // routes
+app.use('/api', require('./routes/userRoutes'));
 app.use('/api', require('./routes/gameRoutes'));
 app.use('/api', require('./routes/currencyRoutes'));
 app.use(errorHandler);

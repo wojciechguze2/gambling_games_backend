@@ -1,0 +1,7 @@
+POST {{ API_URL }}:{{ API_PORT }}/api/user/register
+Content-Type: application/json
+
+{
+  "username": "test-user",
+  "initiallyEncryptedPassword": "U2FsdGVkX1+sVlOyePhU/P73ZCuTBx8EoIBmzWyURhk="
+}
