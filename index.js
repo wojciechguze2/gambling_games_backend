@@ -8,8 +8,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const db = require("./models");
 const errorHandler = require("./middleware/errorHandler");
+const cors = require("cors");
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 // routes

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
         },
         value: {
-            type: DataTypes.STRING,
+            type: DataTypes.DECIMAL(13, 4),
             allowNull: false
         },
         chance: {

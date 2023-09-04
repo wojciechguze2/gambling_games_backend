@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       value: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(13, 4),
       },
       chance: {
         type: Sequelize.INTEGER,

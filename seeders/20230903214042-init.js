@@ -22,27 +22,27 @@ module.exports = {
 
     await queryInterface.bulkInsert('GameValue', [
       {
-        value: '100',
+        value: 100,
         chance: 10,
         gameId: 1
       },
       {
-        value: '50',
+        value: 50,
         chance: 20,
         gameId: 1
       },
       {
-        value: '400',
+        value: 400,
         chance: 5,
         gameId: 1
       },
       {
-        value: '30',
+        value: 30,
         chance: 30,
         gameId: 1
       },
       {
-        value: '20',
+        value: 20,
         chance: 35,
         gameId: 1
       },

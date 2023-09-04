@@ -126,6 +126,12 @@ const getGame = async (req, res) => {
         include: [
             {
                 model: db.GameValue,
+                include: [
+                    {
+                        model: db.Currency,
+                        attributes: ['name']
+                    }
+                ]
             }
         ],
     });

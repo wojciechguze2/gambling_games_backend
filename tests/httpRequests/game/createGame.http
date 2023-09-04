@@ -6,27 +6,27 @@ Content-Type: application/json
   "gameCostBaseValue": 20,
   "gameValues": [
     {
-      "value": "Value 1",
+      "value": 10,
       "chance": 20,
       "currencyId": 1
     },
     {
-      "value": "Value 2",
+      "value": 20,
       "chance": 30,
       "currencyId": 1
     },
     {
-      "value": "Value 3",
+      "value": 30,
       "chance": 30,
       "currencyId": 1
     },
     {
-      "value": "Value 4",
+      "value": 40,
       "chance": 10,
       "currencyId": 1
     },
     {
-      "value": "Value 5",
+      "value": 50,
       "chance": 10,
       "currencyId": 1
     }
