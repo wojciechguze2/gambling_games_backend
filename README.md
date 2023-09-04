@@ -6,9 +6,9 @@ npx sequelize-cli db:seed:all
 ```
 
 ### Initially encrypt password:
-securityHelper.encodeRequestPassword:
+securityHelper.encodeRequestValue:
 ```
-encodeRequestPassword(rawPassword)
+encodeRequestValue(rawPassword)
 ```
 
 ### Output for string "Password":

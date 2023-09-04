@@ -1,20 +1,20 @@
 const CryptoJS = require("crypto-js");
 
-function encodeRequestPassword(unEncryptedPassword) {
+function encodeRequestValue(unEncryptedValue) {
     return CryptoJS.AES.encrypt(
-        unEncryptedPassword,
+        unEncryptedValue,
         process.env.PASSPHRASE_SECRET
     ).toString()
 }
 
-function decodeRequestPassword(initiallyEncryptedPassword) {
+function decodeRequestValue(initiallyEncryptedValue) {
     return CryptoJS.AES.decrypt(
-        initiallyEncryptedPassword,
+        initiallyEncryptedValue,
         process.env.PASSPHRASE_SECRET
     ).toString(CryptoJS.enc.Utf8)
 }
 
 module.exports = {
-    encodeRequestPassword,
-    decodeRequestPassword,
+    encodeRequestValue,
+    decodeRequestValue,
 }

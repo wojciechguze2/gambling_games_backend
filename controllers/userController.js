@@ -1,7 +1,7 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { decodeRequestPassword } = require('../utils/securityHelper');
+const { decodeRequestValue } = require('../utils/securityHelper');
 const {
     USER_PASSWORD_BCRYPT_SALT,
     JWT_AUTHENTICATION_TOKEN_EXPIRES
@@ -24,7 +24,7 @@ const register = async (req, res) => {
     }
 
     const encryptedPassword = await bcrypt.hash(
-        decodeRequestPassword(initiallyEncryptedPassword),
+        decodeRequestValue(initiallyEncryptedPassword),
         USER_PASSWORD_BCRYPT_SALT
     );
 
@@ -66,7 +66,7 @@ const login = async (req, res) => {
     }
 
     const passwordMatches = await bcrypt.compare(
-        decodeRequestPassword(initiallyEncryptedPassword),
+        decodeRequestValue(initiallyEncryptedPassword),
         user.password
     )
 
