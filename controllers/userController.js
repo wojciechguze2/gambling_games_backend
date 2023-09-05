@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const { decodeRequestValue } = require('../utils/securityHelper');
 const {
     USER_PASSWORD_BCRYPT_SALT,
-    JWT_AUTHENTICATION_TOKEN_EXPIRES
+    JWT_AUTHENTICATION_TOKEN_EXPIRES,
+    USER_REGISTER_BONUS_CODE
 } = require('../utils/constants');
 const { getAccountBalance } = require('../utils/user')
 
@@ -44,6 +45,12 @@ const register = async (req, res) => {
             expiresIn: JWT_AUTHENTICATION_TOKEN_EXPIRES,
         }
     );
+
+    const registerBonus = await db.UserBonus.findOne({where: { code: USER_REGISTER_BONUS_CODE }})
+
+    if (registerBonus && registerBonus.baseValue) {
+        user.accountBalance += registerBonus.baseValue
+    }
 
     user.save()
 
