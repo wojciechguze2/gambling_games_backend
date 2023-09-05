@@ -62,7 +62,7 @@ const login = async (req, res) => {
     const user = await db.User.findOne({ where: { username } });
 
     if (!user) {
-        return res.status(401).json({ error: 'Invalid credentials' });
+        return res.status(403).json({ error: 'Invalid credentials' });
     }
 
     const passwordMatches = await bcrypt.compare(
@@ -71,7 +71,7 @@ const login = async (req, res) => {
     )
 
     if (!passwordMatches) {
-        return res.status(401).json({ error: 'Invalid credentials' });
+        return res.status(403).json({ error: 'Invalid credentials' });
     }
 
     user.token = jwt.sign(
