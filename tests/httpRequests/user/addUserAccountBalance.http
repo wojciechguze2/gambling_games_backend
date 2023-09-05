@@ -1,0 +1,7 @@
+PATCH {{ API_URL }}:{{ API_PORT }}/api/user/account-balance/add
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IndvamNpZWNoLmd1emUiLCJpYXQiOjE2OTM5NTE4MDgsImV4cCI6MTY5Mzk1OTAwOH0.8r4bfwZhDthcLJJ6K9ASYK65dPcdtrD4WDr-i0VOGfs
+
+{
+  "value": 100
+}

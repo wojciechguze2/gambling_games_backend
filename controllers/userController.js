@@ -7,7 +7,10 @@ const {
     JWT_AUTHENTICATION_TOKEN_EXPIRES,
     USER_REGISTER_BONUS_CODE
 } = require('../utils/constants');
-const { getAccountBalance } = require('../utils/user')
+const {
+    getAccountBalance,
+    addAccountBalance
+} = require('../utils/user')
 
 const register = async (req, res) => {
     const {
@@ -52,7 +55,7 @@ const register = async (req, res) => {
         user.accountBalance += registerBonus.baseValue
     }
 
-    user.save()
+    await user.save()
 
     return res.status(201).json(user);
 };
@@ -93,7 +96,7 @@ const login = async (req, res) => {
         }
     );
 
-    user.save()
+    await user.save()
 
     return res.status(200).json(user);
 };
@@ -144,6 +147,23 @@ const getUserAccountBalance = async (req, res) => {
     return res.status(200).json(accountBalance)
 }
 
+const addUserAccountBalance = async (req, res) => { // todo: (currencies, different values, maybe payments)
+    const userId = req.user.user_id
+    const { value } = req.body
+
+    if (!userId) {
+        return res.status(401).json({ error: 'Authentication error.' });
+    }
+
+    if (!value) {
+        return res.status(400).json({ error: 'Invalid value.' });
+    }
+
+    const accountBalance = await addAccountBalance(userId, value)
+
+    return res.status(200).json(accountBalance)
+}
+
 const testToken = async (req, res) => {
     res.status(201).json();
 };
@@ -152,6 +172,7 @@ module.exports = {
     register,
     login,
     getUser,
+    addUserAccountBalance,
     getUserAccountBalance,
     testToken,
 };
