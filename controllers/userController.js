@@ -14,10 +14,10 @@ const register = async (req, res) => {
     } = req.body;
 
     if (!username || !initiallyEncryptedPassword) {
-        res.status(400).json({ error: 'Validation error' });
+        return res.status(400).json({ error: 'Validation error' });
     }
 
-    const existingUser = await db.User.findOne({ username });
+    const existingUser = await db.User.findOne({ where: { username } });
 
     if (existingUser) {
         return res.status(409).json({ error: 'User already exists' });
@@ -46,7 +46,7 @@ const register = async (req, res) => {
 
     user.save()
 
-    res.status(201).json(user);
+    return res.status(201).json(user);
 };
 
 const login = async (req, res) => {
@@ -56,10 +56,10 @@ const login = async (req, res) => {
     } = req.body;
 
     if (!username || !initiallyEncryptedPassword) {
-        res.status(400).json({ error: 'Validation error' });
+        return res.status(400).json({ error: 'Validation error' });
     }
 
-    const user = await db.User.findOne({ username });
+    const user = await db.User.findOne({ where: { username } });
 
     if (!user) {
         return res.status(401).json({ error: 'Invalid credentials' });
@@ -87,7 +87,7 @@ const login = async (req, res) => {
 
     user.save()
 
-    res.status(200).json(user);
+    return res.status(200).json(user);
 };
 
 const testToken = async (req, res) => {
