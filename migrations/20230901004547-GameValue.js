@@ -16,6 +16,11 @@ module.exports = {
       chance: {
         type: Sequelize.INTEGER,
       },
+      isJackpot: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
       GameId: {
         type: Sequelize.INTEGER,
         references: {

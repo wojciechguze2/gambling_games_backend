@@ -1,2 +1,2 @@
-GET {{ API_URL }}:{{ API_PORT }}/api/games/1
+GET {{ API_URL }}:{{ API_PORT }}/api/games/2
 Content-Type: application/json
