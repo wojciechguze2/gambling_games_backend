@@ -144,6 +144,10 @@ const getUserAccountBalance = async (req, res) => {
 
     const accountBalance = await getAccountBalance(userId)
 
+    if (accountBalance === false) {
+        return res.status(401).json({ error: 'Authentication error.' });
+    }
+
     return res.status(200).json(accountBalance)
 }
 
@@ -160,6 +164,10 @@ const addUserAccountBalance = async (req, res) => { // todo: (currencies, differ
     }
 
     const accountBalance = await addAccountBalance(userId, value)
+
+    if (accountBalance === false) {
+        return res.status(401).json({ error: 'Authentication error.' });
+    }
 
     return res.status(200).json(accountBalance)
 }
