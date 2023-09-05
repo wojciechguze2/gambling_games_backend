@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
         token: {
             type: DataTypes.STRING
         },
+        accountBalance: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+            defaultValue: 0.00,
+        },
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -23,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true,
         timestamps: true
     });
+
+    User.associate = (models) => {
+        User.hasMany(models.GameHistory, { foreignKey: 'userId' });
+    }
 
     return User
 }

@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
         },
-        winValue: {
+        winBaseValue: {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false,
         },
@@ -49,14 +49,7 @@ module.exports = (sequelize) => {
         });
 
         GameHistory.belongsTo(models.Currency, {
-            foreignKey: 'costCurrencyId',
-            as: 'CostCurrency',
-            onDelete: 'RESTRICT',
-        });
-
-        GameHistory.belongsTo(models.Currency, {
             foreignKey: 'winCurrencyId',
-            as: 'WinCurrency',
             onDelete: 'RESTRICT',
         });
     };

@@ -30,7 +30,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DECIMAL(10, 2),
       },
-      winValue: {
+      winBaseValue: {
         allowNull: false,
         type: Sequelize.DECIMAL(10, 2),
       },

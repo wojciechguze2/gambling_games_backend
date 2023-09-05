@@ -121,6 +121,13 @@ const getRandomGame = async (req, res) => {
 
 const getGame = async (req, res) => {
     const { gameId } = req.params;
+    const currencyId = 1 // todo: choose currency and send here
+
+    const currency = await db.Currency.findByPk(currencyId)
+
+    if (!currency) {
+        return res.status(400).json({ error: 'Wrong currency.' });
+    }
 
     const game = await db.Game.findByPk(gameId, {
         include: [
@@ -140,24 +147,29 @@ const getGame = async (req, res) => {
         return res.status(404).json({ error: 'Game does not exist.' });
     }
 
-    res.status(200).json(game);
+    const costValue = game.costBaseValue * currency.multiplier
+
+    res.status(200).json({
+        game,
+        costValue,
+        currencyName: currency.name,
+    });
 }
 
 const getGameDemoResult = async (req, res) => {
     const { gameId } = req.params;
 
-    const randomGameResult = await playGame(null, gameId, true);
-
-    return res.status(200).json(randomGameResult);
+   return playGame(res, null, gameId, true);
 }
 
 const getGameResult = async (req, res) => {
     const { gameId } = req.params;
+    const {
+        costValue,
+    } = req.body;
     const userId = req.user.user_id
 
-    const randomGameResult = await playGame(userId, gameId);
-
-    return res.status(200).json(randomGameResult);
+    return playGame(res, userId, gameId, false, costValue);
 }
 
 module.exports = {

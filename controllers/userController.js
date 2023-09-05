@@ -6,6 +6,7 @@ const {
     USER_PASSWORD_BCRYPT_SALT,
     JWT_AUTHENTICATION_TOKEN_EXPIRES
 } = require('../utils/constants');
+const { getAccountBalance } = require('../utils/user')
 
 const register = async (req, res) => {
     const {
@@ -90,6 +91,52 @@ const login = async (req, res) => {
     return res.status(200).json(user);
 };
 
+const getUser = async (req, res) => {
+    const userId = req.user.user_id
+
+    if (!userId) {
+        return res.status(401).json({ error: 'Authentication error.' });
+    }
+
+    const user = await db.User.findByPk(userId, {
+        include: [
+            {
+                model: db.GameHistory,
+                limit: 10,
+                order: [['playDate', 'DESC']],
+                include: [
+                    {
+                        model: db.Game,
+                        attributes: ['name']
+                    },
+                    {
+                        model: db.Currency,
+                        attributes: ['name']
+                    }
+                ],
+            },
+        ],
+    });
+
+    if (!user) {
+        return res.status(401).json({ error: 'Authentication error.' });
+    }
+
+    return res.status(200).json(user)
+};
+
+const getUserAccountBalance = async (req, res) => {
+    const userId = req.user.user_id
+
+    if (!userId) {
+        return res.status(401).json({ error: 'Authentication error.' });
+    }
+
+    const accountBalance = await getAccountBalance(userId)
+
+    return res.status(200).json(accountBalance)
+}
+
 const testToken = async (req, res) => {
     res.status(201).json();
 };
@@ -97,5 +144,7 @@ const testToken = async (req, res) => {
 module.exports = {
     register,
     login,
+    getUser,
+    getUserAccountBalance,
     testToken,
 };
