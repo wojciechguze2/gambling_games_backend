@@ -8,7 +8,7 @@ module.exports = {
     const getInitialGameValues = (gameId) => {
       return [
         {
-          value: 90000,
+          value: 10000,
           chance: 0.01,
           gameId
         },
@@ -28,7 +28,7 @@ module.exports = {
           gameId
         },
         {
-          value: 50000,
+          value: 8000,
           chance: 0.05,
           gameId
         },
@@ -38,7 +38,7 @@ module.exports = {
           gameId
         },
         {
-          value: 25000,
+          value: 4000,
           chance: 0.1,
           gameId
         },

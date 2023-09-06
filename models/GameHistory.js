@@ -28,6 +28,11 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        gameMultiplier: {
+            type: DataTypes.DECIMAL(10, 4),
+            allowNull: false,
+            defaultValue: 1
+        },
         playDate: {
             type: DataTypes.DATE,
             allowNull: false,

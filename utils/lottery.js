@@ -27,9 +27,17 @@ const getRandomGameResult = (game) => {
  * @param {number} gameId - Game identity.
  * @param {boolean} demo - Is demo (whether to save the result).
  * @param {number|null} costValue - Cost value (gameBaseValue * currency multiplier).
+ * @param {number} gameMultiplier - Game cost && value multiplier
  * @returns {GameValue} - Game value as an object
  */
-const playGame = async (res, userId, gameId, demo = false, costValue = null) => {
+const playGame = async (
+    res,
+    userId,
+    gameId,
+    demo = false,
+    costValue = null,
+    gameMultiplier = 1
+) => {
     if (!gameId) {
         return res.status(404).json({ error: 'Game does not exist.' });
     }
@@ -57,8 +65,8 @@ const playGame = async (res, userId, gameId, demo = false, costValue = null) => 
 
     let userAccountBalance
 
-    const winCostValue = game.costBaseValue * currency.multiplier
-    const winValue = gameResult.value * currency.multiplier
+    const winCostValue = game.costBaseValue * currency.multiplier * gameMultiplier  // todo: check currency multiplier
+    const winValue = gameResult.value * currency.multiplier * gameMultiplier
     const accountBalanceAddition = winValue - winCostValue
 
     if (!demo) {
@@ -76,10 +84,9 @@ const playGame = async (res, userId, gameId, demo = false, costValue = null) => 
             return res.status(401).json({ error: 'Authentication error.' });
         }
 
-        const gameTransaction = await db.sequelize.transaction(),
-            gameCost = (game.costBaseValue * currency.multiplier)
+        const gameTransaction = await db.sequelize.transaction()
 
-        if (gameCost > user.accountBalance) {
+        if (winCostValue > user.accountBalance) {
             return res.status(409).json({ error: 'Account balance is too low' })
         }
 
@@ -95,6 +102,7 @@ const playGame = async (res, userId, gameId, demo = false, costValue = null) => 
                 winBaseValue: gameResult.value,
                 winCurrencyId: gameResult.currencyId,
                 playDate: new Date(),
+                gameMultiplier
             }, {transaction: gameTransaction});
 
             await gameTransaction.commit()

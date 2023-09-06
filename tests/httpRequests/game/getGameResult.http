@@ -3,5 +3,6 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3QtdXNlciIsImlhdCI6MTY5Mzg2OTg4MiwiZXhwIjoxNjkzODc3MDgyfQ.lA2b2MipMXEf8XcxccPOTTeGKuX1I9H1GNchrwWiYts
 
 {
-  "costValue": 100
+  "costValue": 100,
+  "gameMultiplier": 1
 }

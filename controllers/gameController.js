@@ -166,10 +166,11 @@ const getGameResult = async (req, res) => {
     const { gameId } = req.params;
     const {
         costValue,
+        gameMultiplier
     } = req.body;
     const userId = req.user.user_id
 
-    return playGame(res, userId, gameId, false, costValue);
+    return playGame(res, userId, gameId, false, costValue, gameMultiplier);
 }
 
 module.exports = {

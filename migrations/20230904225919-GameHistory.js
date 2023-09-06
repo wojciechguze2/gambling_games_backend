@@ -42,6 +42,11 @@ module.exports = {
           key: 'id',
         },
       },
+      gameMultiplier: {
+        type: Sequelize.DECIMAL(10, 4),
+        allowNull: false,
+        defaultValue: 1
+      },
       playDate: {
         allowNull: false,
         type: Sequelize.DATE,
