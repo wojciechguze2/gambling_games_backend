@@ -1,2 +1,2 @@
-GET {{ API_URL }}:{{ API_PORT }}/api/games/2
+GET {{ API_URL }}:{{ API_PORT }}/api/games/wheel-of-fortune
 Content-Type: application/json

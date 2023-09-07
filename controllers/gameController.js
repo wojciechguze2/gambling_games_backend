@@ -1,13 +1,14 @@
 const db = require('../models');
-const { playGame } = require('../utils/lottery');
+const { playGame, getGameIdByCode} = require('../utils/lottery');
 
 const getGames = async (req, res) => {
     const games = await db.Game.findAll({
-        include: [
+        where: { active: true }
+        /*include: [
             {
                 model: db.GameValue,
             }
-        ],
+        ],*/
     });
 
     res.status(200).json(games);
@@ -120,7 +121,7 @@ const getRandomGame = async (req, res) => {
 }
 
 const getGame = async (req, res) => {
-    const { gameId } = req.params;
+    const { gameCode } = req.params
     const currencyId = 1 // todo: choose currency and send here
 
     const currency = await db.Currency.findByPk(currencyId)
@@ -128,6 +129,8 @@ const getGame = async (req, res) => {
     if (!currency) {
         return res.status(400).json({ error: 'Wrong currency.' });
     }
+
+    const gameId = await getGameIdByCode(gameCode)
 
     const game = await db.Game.findByPk(gameId, {
         include: [

@@ -8,7 +8,7 @@ router.post('/games', gameController.createGame);
 router.delete('/games', gameController.deleteGame);
 router.patch('/games', gameController.updateGame);
 router.get('/games/random', gameController.getRandomGame);
-router.get('/games/:gameId', gameController.getGame);
+router.get('/games/:gameCode', gameController.getGame);
 router.post('/games/:gameId/result', jwtAuthentication, gameController.getGameResult);
 router.get('/games/:gameId/demo', gameController.getGameDemoResult);
 

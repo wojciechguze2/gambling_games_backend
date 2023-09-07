@@ -124,6 +124,24 @@ const playGame = async (
     })
 }
 
+const getGameIdByCode = async (gameCode) => {
+    if (!gameCode) {
+        return null
+    }
+
+    const game = await db.Game.findOne({
+        where: { code: gameCode },
+        attributes: ['id']
+    })
+
+    if (!game) {
+        return null
+    }
+
+    return game.id
+}
+
 module.exports = {
-    playGame
+    playGame,
+    getGameIdByCode
 };
