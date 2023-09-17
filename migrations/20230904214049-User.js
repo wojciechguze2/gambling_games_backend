@@ -34,6 +34,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     }, {
       freezeTableName: true,
       timestamps: true

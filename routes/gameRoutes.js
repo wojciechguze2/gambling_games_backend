@@ -4,6 +4,7 @@ const gameController = require('../controllers/gameController');
 const jwtAuthentication = require('../middleware/authentication');
 
 router.get('/games', gameController.getGames);
+router.get('/games/latest', gameController.getLatestGames);
 router.post('/games', gameController.createGame);
 router.delete('/games', gameController.deleteGame);
 router.patch('/games', gameController.updateGame);

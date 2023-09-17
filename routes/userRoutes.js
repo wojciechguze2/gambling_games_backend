@@ -4,6 +4,7 @@ const userController = require('../controllers/userController');
 const jwtAuthentication = require('../middleware/authentication');
 
 router.get('/user', jwtAuthentication, userController.getUser);
+router.delete('/user', jwtAuthentication, userController.deleteUser);
 router.get('/user/account-balance', jwtAuthentication, userController.getUserAccountBalance);
 router.patch('/user/account-balance/add', jwtAuthentication, userController.addUserAccountBalance);
 router.post('/user/register', userController.register);

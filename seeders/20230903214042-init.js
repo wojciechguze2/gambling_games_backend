@@ -96,8 +96,8 @@ module.exports = {
     await queryInterface.bulkInsert('Game', [
       {
         id: 2,
-        code: 'roulette',
-        name: 'Ruletka',
+        code: 'fruit-machine',
+        name: 'Jednoręki bandyta',
         costBaseValue: 100
       },
     ], {});
@@ -105,8 +105,8 @@ module.exports = {
     await queryInterface.bulkInsert('Game', [
       {
         id: 3,
-        code: 'black-jack',
-        name: 'Blackjack',
+        code: 'number-lottery',
+        name: 'Loteria liczbowa',
         costBaseValue: 100
       },
     ], {});

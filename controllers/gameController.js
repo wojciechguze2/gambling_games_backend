@@ -14,6 +14,18 @@ const getGames = async (req, res) => {
     res.status(200).json(games);
 };
 
+const getLatestGames = async (req, res) => {
+    const count = req.query.count ? parseInt(req.query.count) : 3
+
+    const games = await db.Game.findAll({
+        where: { active: true },
+        order: [['createdAt', 'DESC']],
+        limit: count,
+    })
+
+    res.status(200).json(games);
+};
+
 const createGame = async (req, res) => {
     const {
         gameName,
@@ -178,6 +190,7 @@ const getGameResult = async (req, res) => {
 
 module.exports = {
     getGames,
+    getLatestGames,
     createGame,
     updateGame,
     deleteGame,

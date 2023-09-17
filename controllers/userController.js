@@ -1,7 +1,7 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { decodeRequestValue } = require('../utils/securityHelper');
+const { decodeRequestValue } = require('../utils/securityHelper')
 const {
     USER_PASSWORD_BCRYPT_SALT,
     JWT_AUTHENTICATION_TOKEN_EXPIRES,
@@ -28,8 +28,14 @@ const register = async (req, res) => {
         return res.status(409).json({ error: 'User already exists' });
     }
 
+    const decodedPassword = decodeRequestValue(initiallyEncryptedPassword)
+
+    if (!decodedPassword) {
+        return res.status(400).json({ error: 'Password is required. '})
+    }
+
     const encryptedPassword = await bcrypt.hash(
-        decodeRequestValue(initiallyEncryptedPassword),
+        decodedPassword,
         USER_PASSWORD_BCRYPT_SALT
     );
 
@@ -76,8 +82,18 @@ const login = async (req, res) => {
         return res.status(403).json({ error: 'Invalid credentials' });
     }
 
+    const decodedPassword = decodeRequestValue(initiallyEncryptedPassword)
+
+    if (!decodedPassword) {
+        return res.status(400).json({ error: 'Password is required.' });
+    }
+
+    if (!user.active) {
+        return res.status(403).json({ error: 'Account is inactive' });
+    }
+
     const passwordMatches = await bcrypt.compare(
-        decodeRequestValue(initiallyEncryptedPassword),
+        decodedPassword,
         user.password
     )
 
@@ -135,6 +151,25 @@ const getUser = async (req, res) => {
     return res.status(200).json(user)
 };
 
+const deleteUser = async (req, res) => {
+    const userId = req.user.user_id
+
+    if (!userId) {
+        return res.status(401).json({ error: 'Authentication error.' });
+    }
+
+    const user = await db.User.findByPk(userId);
+
+    if (!user) {
+        return res.status(401).json({ error: 'Authentication error.' });
+    }
+
+    user.active = false
+    await user.save()
+
+    return res.status(200).json({ message: 'Deleted successfully' })
+}
+
 const getUserAccountBalance = async (req, res) => {
     const userId = req.user.user_id
 
@@ -180,6 +215,7 @@ module.exports = {
     register,
     login,
     getUser,
+    deleteUser,
     addUserAccountBalance,
     getUserAccountBalance,
     testToken,
